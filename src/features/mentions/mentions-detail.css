@@ -1,0 +1,203 @@
+.mention-detail-container {
+  margin: 0 auto;
+  max-width: 1400px;
+  padding: 24px;
+}
+
+.mention-detail-header {
+  align-items: center;
+  border-bottom: 2px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+}
+
+.mention-detail-header h2 {
+  color: #333;
+  font-size: 24px;
+  margin: 0;
+}
+
+.back-button {
+  background-color: #6c757d;
+  border-radius: 4px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 16px;
+  transition: background-color 0.2s;
+}
+
+.back-button:hover {
+  background-color: #5a6268;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  border-radius: 4px;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  margin-bottom: 20px;
+  padding: 12px;
+}
+
+.mention-detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.detail-section {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  padding: 20px;
+}
+
+.detail-section h3 {
+  color: #495057;
+  font-size: 18px;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.detail-row {
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  margin-bottom: 12px;
+  padding: 8px 0;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row label {
+  color: #495057;
+  font-weight: 600;
+  min-width: 120px;
+}
+
+.detail-row span {
+  flex: 1;
+  color: #212529;
+}
+
+.status-badge {
+  border-radius: 12px;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  text-transform: uppercase;
+}
+
+.status-badge.pending {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.status-badge.reply {
+  background-color: #28a745;
+  color: white;
+}
+
+.status-badge.ignore {
+  background-color: #6c757d;
+  color: white;
+}
+
+.status-badge.escalate {
+  background-color: #dc3545;
+  color: white;
+}
+
+.assign-form {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+}
+
+.user-select {
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+  flex: 1;
+  font-size: 14px;
+  padding: 8px 12px;
+}
+
+.assign-button {
+  background-color: #007bff;
+  border-radius: 4px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 24px;
+  transition: background-color 0.2s;
+}
+
+.assign-button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.assign-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.disposition-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.disposition-btn {
+  border-radius: 4px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 20px;
+  transition: all 0.2s;
+}
+
+.disposition-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.disposition-btn.reply-btn {
+  background-color: #28a745;
+}
+
+.disposition-btn.reply-btn:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.disposition-btn.ignore-btn {
+  background-color: #6c757d;
+}
+
+.disposition-btn.ignore-btn:hover:not(:disabled) {
+  background-color: #5a6268;
+}
+
+.disposition-btn.escalate-btn {
+  background-color: #dc3545;
+}
+
+.disposition-btn.escalate-btn:hover:not(:disabled) {
+  background-color: #c82333;
+}
+
+.error {
+  color: #dc3545;
+  font-size: 16px;
+  padding: 20px;
+  text-align: center;
+}
