@@ -4,4 +4,11 @@ import react from '@vitejs/plugin-react';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    host: true, // Enable network access for Docker
+    port: 5173,
+    watch: {
+      usePolling: true, // Enable polling for Docker file watching
+    },
+  },
 });
