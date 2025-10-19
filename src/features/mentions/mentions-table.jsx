@@ -46,13 +46,20 @@ export function MentionsTable({ data, onRowClick, updateMention }) {
         accessorKey: 'disposition',
         header: 'Disposition',
         size: 120,
-        cell: ({ row }) => (
-          <span
-            className={`status-badge ${row.original.disposition || 'pending'}`}
-          >
-            {row.original.disposition || 'pending'}
-          </span>
-        ),
+        cell: ({ row }) =>
+          row.original.type === 'comment' &&
+          row.original.state !== 'replied' ? (
+            <span
+              className={`status-badge ${row.original.disposition || 'pending'}`}
+            >
+              {row.original.disposition || 'pending'}
+            </span>
+          ) : null,
+      },
+      {
+        accessorKey: 'mentionId',
+        header: 'Reply To',
+        size: 50,
       },
       {
         accessorKey: 'createdAt',
@@ -73,31 +80,33 @@ export function MentionsTable({ data, onRowClick, updateMention }) {
         id: 'actions',
         header: 'Actions',
         size: 200,
-        cell: ({ row }) => (
-          <div className="action-buttons">
-            <button
-              className="action-btn reply-btn"
-              onClick={e => handleDisposition(e, row.original.id, 'reply')}
-              title="Mark as Reply"
-            >
-              Reply
-            </button>
-            <button
-              className="action-btn ignore-btn"
-              onClick={e => handleDisposition(e, row.original.id, 'ignore')}
-              title="Mark as Ignore"
-            >
-              Ignore
-            </button>
-            <button
-              className="action-btn escalate-btn"
-              onClick={e => handleDisposition(e, row.original.id, 'escalate')}
-              title="Mark as Escalate"
-            >
-              Escalate
-            </button>
-          </div>
-        ),
+        cell: ({ row }) =>
+          row.original.type === 'comment' &&
+          row.original.state !== 'replied' ? (
+            <div className="action-buttons">
+              <button
+                className="action-btn reply-btn"
+                onClick={e => handleDisposition(e, row.original.id, 'reply')}
+                title="Mark as Reply"
+              >
+                Reply
+              </button>
+              <button
+                className="action-btn ignore-btn"
+                onClick={e => handleDisposition(e, row.original.id, 'ignore')}
+                title="Mark as Ignore"
+              >
+                Ignore
+              </button>
+              <button
+                className="action-btn escalate-btn"
+                onClick={e => handleDisposition(e, row.original.id, 'escalate')}
+                title="Mark as Escalate"
+              >
+                Escalate
+              </button>
+            </div>
+          ) : null,
       },
     ],
     [handleDisposition]
@@ -130,8 +139,8 @@ export function MentionsTable({ data, onRowClick, updateMention }) {
                         header.getContext()
                       )}
                   {{
-                    asc: ' 🔼',
-                    desc: ' 🔽',
+                    asc: ' \u25B2',
+                    desc: ' \u25BC',
                   }[header.column.getIsSorted()] ?? null}
                 </th>
               ))}

@@ -82,7 +82,8 @@
 
 .status-badge.reply,
 .status-badge.assignment,
-.status-badge.reply_attempt {
+.status-badge.reply_attempt,
+.status-badge.replied {
   background-color: #28a745;
   color: white;
 }

@@ -46,6 +46,7 @@ export function MentionDetails() {
     try {
       await sendReply(id, { content: replyContent });
       alert('Reply sent successfully');
+      navigate('/mentions');
     } catch (err) {
       setError('Failed to send reply');
       console.error('Failed to send reply:', err);
@@ -113,9 +114,13 @@ export function MentionDetails() {
           <div className="detail-row">
             <label>Disposition:</label>
             <span
-              className={`status-badge ${mention.disposition || 'pending'}`}
+              className={
+                mention.state !== 'replied' &&
+                `status-badge ${mention.disposition || 'pending'}`
+              }
             >
-              {mention.disposition || 'pending'}
+              {mention.state !== 'replied' &&
+                (mention.disposition || 'pending')}
             </span>
           </div>
           <div className="detail-row">
@@ -136,54 +141,58 @@ export function MentionDetails() {
           )}
         </div>
 
-        <div className="detail-section">
-          <h3>Assign to Teammate</h3>
-          <div className="assign-form">
-            <select
-              value={selectedUser}
-              onChange={e => setSelectedUser(e.target.value)}
-              className="user-select"
-              disabled={loading}
-            >
-              <option value="">Select a user...</option>
-              {users.map(user => (
-                <option key={user.id} value={user.id}>
-                  {user.email}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={handleAssign}
-              className="assign-button"
-              disabled={loading}
-            >
-              {loading ? 'Assigning...' : 'Assign'}
-            </button>
+        {mention.type === 'comment' && mention.state !== 'replied' && (
+          <div className="detail-section">
+            <h3>Assign to Teammate</h3>
+            <div className="assign-form">
+              <select
+                value={selectedUser}
+                onChange={e => setSelectedUser(e.target.value)}
+                className="user-select"
+                disabled={loading}
+              >
+                <option value="">Select a user...</option>
+                {users.map(user => (
+                  <option key={user.id} value={user.id}>
+                    {user.email}
+                  </option>
+                ))}
+              </select>
+              <button
+                onClick={handleAssign}
+                className="assign-button"
+                disabled={loading}
+              >
+                {loading ? 'Assigning...' : 'Assign'}
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
-        <div className="detail-section">
-          <h3>Send Reply</h3>
-          <textarea
-            placeholder="Enter your reply..."
-            rows={4}
-            cols={50}
-            name="replyContent"
-            value={replyContent}
-            onChange={e => setReplyContent(e.target.value)}
-            className="reply-textarea"
-            disabled={loading}
-          />
-          <div className="disposition-buttons">
-            <button
-              className="disposition-btn reply-btn"
-              onClick={() => handleReply('reply')}
+        {mention.type === 'comment' && mention.state !== 'replied' && (
+          <div className="detail-section">
+            <h3>Send Reply</h3>
+            <textarea
+              placeholder="Enter your reply..."
+              rows={4}
+              cols={50}
+              name="replyContent"
+              value={replyContent}
+              onChange={e => setReplyContent(e.target.value)}
+              className="reply-textarea"
               disabled={loading}
-            >
-              Reply
-            </button>
+            />
+            <div className="disposition-buttons">
+              <button
+                className="disposition-btn reply-btn"
+                onClick={() => handleReply('reply')}
+                disabled={loading}
+              >
+                Reply
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

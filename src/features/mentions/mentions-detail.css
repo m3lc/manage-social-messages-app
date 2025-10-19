@@ -99,7 +99,8 @@
   color: #000;
 }
 
-.status-badge.reply {
+.status-badge.reply,
+.status-badge.replied {
   background-color: #28a745;
   color: white;
 }
