@@ -1,9 +1,9 @@
 import { useMentions } from '../../contexts/mentions/hooks/use-mentions';
 import { useMentionsApi } from '../../contexts/mentions/hooks/use-mentions-api';
 import { MentionsTable } from './mentions-table';
-import './mentions.css';
 import { useNavigate } from 'react-router';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import './mentions.css';
 
 export function Mentions() {
   const { mentions, loading, error } = useMentions();
@@ -13,6 +13,10 @@ export function Mentions() {
   const [keywordFilter, setKeywordFilter] = useState('');
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchMentions();
+  }, [fetchMentions]);
 
   // Get unique networks for filter dropdown
   const networks = useMemo(() => {
