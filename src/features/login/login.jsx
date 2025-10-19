@@ -1,4 +1,5 @@
 import { useLoginUserApi } from '../../contexts/login/hooks/use-login-user-api';
+import './login.css';
 
 export function Login() {
   const { onLogin } = useLoginUserApi();
@@ -14,8 +15,12 @@ export function Login() {
     <div>
       <h1>Login</h1>
       <form onSubmit={e => handleSubmit(e)}>
-        <input type="text" name="email" placeholder="email" />
-        <button type="submit">Login</button>
+        <div className="container-login-input">
+          <input type="text" name="email" placeholder="email" />
+        </div>
+        <div className="container-login-button">
+          <button type="submit">Login</button>
+        </div>
       </form>
     </div>
   );
