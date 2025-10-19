@@ -2,6 +2,7 @@ import { useLayoutEffect, useMemo, useReducer } from 'react';
 import { LoginApiContext } from './login-api-context';
 import { LoginContext } from './login-context';
 import { http } from '../../services/http';
+import { usersApi } from '../../services/api';
 
 const initialState = {
   user: null,
@@ -32,23 +33,20 @@ export function LoginProvider({ children }) {
         }
       },
       onLogin: async user => {
-        http(`${import.meta.env.VITE_API_BASE_URL}/users/login`, {
-          method: 'POST',
-          data: user,
-        })
-          .then(res => {
-            localStorage.setItem('msm-data', JSON.stringify(res.data));
+        try {
+          const data = await usersApi.login(user);
+          localStorage.setItem('msm-data', JSON.stringify(data));
 
-            initHttp(res.data);
+          initHttp(data);
 
-            dispatch({
-              type: 'login',
-              data: res.data,
-            });
-          })
-          .catch(err => {
-            console.log(err);
+          dispatch({
+            type: 'login',
+            data: data,
           });
+        } catch (err) {
+          console.error('Login failed:', err);
+          throw err;
+        }
       },
       onLogout: async () => {
         localStorage.removeItem('msm-data');

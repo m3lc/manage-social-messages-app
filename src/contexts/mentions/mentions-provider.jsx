@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useReducer } from 'react';
 import { MentionsApiContext } from './mentions-api-context';
 import { MentionsContext } from './mentions-context';
-import { http } from '../../services/http';
+import { mentionsApi, usersApi } from '../../services/api';
 import { sleep } from '../../services/utils/sleep';
 
 const POLL_INTERVAL = 5000;
@@ -20,22 +20,16 @@ export function MentionsProvider({ children }) {
       fetchMentions: async signal => {
         dispatch({ type: 'fetch_start' });
         try {
-          const res = await http(
-            `${import.meta.env.VITE_API_BASE_URL}/mentions`,
-            {
-              method: 'GET',
-              signal,
-            }
-          );
-          dispatch({ type: 'fetch_success', data: res.data });
+          const data = await mentionsApi.fetchAll(signal);
+          dispatch({ type: 'fetch_success', data });
 
           // Poll if syncing is in progress
-          if (res.data?.meta?.isSyncing) {
+          if (data?.meta?.isSyncing) {
             await sleep(POLL_INTERVAL);
             return await api.fetchMentions(signal);
           }
 
-          return res.data;
+          return data;
         } catch (err) {
           dispatch({ type: 'fetch_error', error: err.message });
           throw err;
@@ -43,15 +37,9 @@ export function MentionsProvider({ children }) {
       },
       updateMention: async (id, mentionData) => {
         try {
-          const res = await http(
-            `${import.meta.env.VITE_API_BASE_URL}/mentions/${id}`,
-            {
-              method: 'PUT',
-              data: mentionData,
-            }
-          );
-          dispatch({ type: 'update_mention', data: res.data });
-          return res.data;
+          const data = await mentionsApi.update(id, mentionData);
+          dispatch({ type: 'update_mention', data });
+          return data;
         } catch (err) {
           console.error('Error updating mention:', err);
           throw err;
@@ -59,11 +47,7 @@ export function MentionsProvider({ children }) {
       },
       fetchUsers: async signal => {
         try {
-          const res = await http(`${import.meta.env.VITE_API_BASE_URL}/users`, {
-            method: 'GET',
-            signal,
-          });
-          return res.data.result || res.data || [];
+          return await usersApi.fetchAll(signal);
         } catch (err) {
           console.error('Failed to fetch users:', err);
           throw err;
@@ -71,14 +55,7 @@ export function MentionsProvider({ children }) {
       },
       sendReply: async (id, replyData) => {
         try {
-          const res = await http(
-            `${import.meta.env.VITE_API_BASE_URL}/mentions/${id}/reply`,
-            {
-              method: 'POST',
-              data: replyData,
-            }
-          );
-          return res.data;
+          return await mentionsApi.sendReply(id, replyData);
         } catch (err) {
           console.error('Error sending reply:', err);
           throw err;
