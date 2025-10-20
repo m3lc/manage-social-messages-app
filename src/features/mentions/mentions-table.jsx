@@ -47,8 +47,7 @@ export function MentionsTable({ data, onRowClick, updateMention }) {
         header: 'Disposition',
         size: 120,
         cell: ({ row }) =>
-          row.original.type === 'comment' &&
-          row.original.state !== 'replied' ? (
+          row.original.type !== 'reply' && row.original.state !== 'replied' ? (
             <span
               className={`status-badge ${row.original.disposition || 'pending'}`}
             >
@@ -81,8 +80,7 @@ export function MentionsTable({ data, onRowClick, updateMention }) {
         header: 'Actions',
         size: 200,
         cell: ({ row }) =>
-          row.original.type === 'comment' &&
-          row.original.state !== 'replied' ? (
+          row.original.type !== 'reply' && row.original.state !== 'replied' ? (
             <div className="action-buttons">
               <button
                 className="action-btn reply-btn"

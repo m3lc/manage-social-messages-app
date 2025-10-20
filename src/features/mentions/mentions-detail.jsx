@@ -141,7 +141,7 @@ export function MentionDetails() {
           )}
         </div>
 
-        {mention.type === 'comment' && mention.state !== 'replied' && (
+        {mention.type !== 'reply' && mention.state !== 'replied' && (
           <div className="detail-section">
             <h3>Assign to Teammate</h3>
             <div className="assign-form">
@@ -169,7 +169,7 @@ export function MentionDetails() {
           </div>
         )}
 
-        {mention.type === 'comment' && mention.state !== 'replied' && (
+        {mention.type !== 'reply' && mention.state !== 'replied' && (
           <div className="detail-section">
             <h3>Send Reply</h3>
             <textarea
